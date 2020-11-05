@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="utf-8">
+    <head>
+        <title>Test</title>
+    </head>
+    <body>
+        <input type = "text" size = "5" id = "id">
+        <button id = "btn" >Получить список задач</button>
+        <ul id = "list"></ul>
+        <script>
+            btn.onclick = function(){
+                let res;
+                let id = document.getElementById("id").value;
+                fetch(`https://jsonplaceholder.typicode.com/users/${id}/todos`)
+                .then((response) => response.json())
+                .then((json) => {
+                    if(json.length != 0){
+                        let output = "";
+                        for(let i = 0; i < json.length; i++)
+                            output += json[i].completed ? `<li><strike>${json[i].title}</strike></li>\n` : `<li>${json[i].title}</li>\n`;
+                        document.getElementById("list").innerHTML = output;
+                    }
+                    else{alert("Пользователь с указанным id не найден")};
+                });
+            }
+        </script>
+    </body>
+</html>

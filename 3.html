@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="utf-8">
+    <head>
+        <title>Test</title>
+    </head>
+    <body>
+        <select id = "select">
+            <option>Год</option>
+            <option>2017</option>
+            <option>2018</option>
+            <option>2019</option>
+        </select>
+        <button id = "btn">Загрузить отчёт</button>
+        <table style="width:10%">
+            <tr><td>1 кв.</td> <td>2 кв.</td> <td>3 кв.</td> <td>4 кв.</td></tr>
+            <tr></tr>
+        </table>
+        <script>
+            btn.onclick = function(){
+                let request = new XMLHttpRequest();
+                request.open("GET", "revenue.json");
+                request.send();
+                if(request.status != 200) console.log("error");
+                else console.log(request.responseText);
+
+                const input = `{"2017":{"q1":40230,"q2":60580,"q3":87450,"q4":54620},"2018":{"q1":37540,"q2":49990,"q3":74320,"q4":61280},"2019":{"q1":43920,"q2":59400,"q3":78450,"q4":62330}}`
+
+                const data = JSON.parse(input);
+
+                let year = document.getElementById("select").value;
+                if(year == "Год") alert("Выберите, пожалуйста, год");
+                else{
+                    const table = document.querySelector("html").querySelector("body").querySelector("table").querySelectorAll("tr")[1];
+                    switch(Number(year)){
+                        case 2017:
+                            table.innerHTML = `<td>${data[2017]["q1"]}</td> <td>${data[2017]["q2"]}</td> <td>${data[2017]["q3"]}</td> <td>${data[2017]["q4"]}</td>`;
+                            break;
+                        case 2018:
+                            table.innerHTML = `<td>${data[2018]["q1"]}</td> <td>${data[2018]["q2"]}</td> <td>${data[2018]["q3"]}</td> <td>${data[2018]["q4"]}</td>`;
+                            break;
+                        case 2019:
+                            table.innerHTML = `<td>${data[2019]["q1"]}</td> <td>${data[2019]["q2"]}</td> <td>${data[2019]["q3"]}</td> <td>${data[2019]["q4"]}</td>`;
+                            break;
+                    }
+                }
+            }
+        </script>
+    </body>
+</html>
