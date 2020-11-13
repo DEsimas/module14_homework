@@ -1,16 +1,20 @@
-const getNum = () => {
-  return new Promise((resolve, reject) => {
-    let num = Math.round(Math.random() * (100 - 1) + 1);
+const promise = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    let num = Math.round(Math.random() * 100);
     if(num % 2 == 0)
       resolve(num);
     else
       reject(num);
-  });
-}
+  }, 3000);
+});
 
-const generate = async () => {
-  const result = await getNum();
-  console.log(result);
-}
+promise
+  .then(data => {
+  	console.log(`Завершено успешно. Сгенерированное число - ${data}`);
+})
+  .catch(data => {
+  	console.log(`Завершено с ошибкой. Сгенерированное число - ${data}`);
+})
 
-setTimeout(generate(), 3000);
+
+// Задание выполнено неверно. Нет корректной обработки Promise (функций then и catch), вывода как указано в условии, с обозначением, завершился Promise с ошибкой или нет. Кроме того, задержка в 3 секунды должна быть внутри самого Promise, у вас она прописана в другом месте. Выше исправила код на верный

@@ -27,10 +27,7 @@ const list = xml.querySelector("list");
 const students = list.querySelectorAll("student");
 
 const result = {
-    list:[
-        {name: undefined, age: undefined, prof: undefined, lang: undefined},
-        {name: undefined, age: undefined, prof: undefined, lang: undefined},
-    ]
+    list:[]
 };
 
 for(let i = 0; i < students.length; i++)
@@ -42,10 +39,16 @@ for(let i = 0; i < students.length; i++)
     const prof = students[i].querySelector("prof");
     const lang = name.getAttribute("lang");
 
-    result.list[i].name = firstName.textContent + ' ' + secondName.textContent;
-    result.list[i].age = age.textContent;
-    result.list[i].prof = prof.textContent;
-    result.list[i].lang = lang.textContent;
+    result.list.push({
+      name: firstName.textContent + ' ' + secondName.textContent,
+      age: age.textContent,
+      prof: prof.textContent,
+      lang: lang
+    });
 }
 
 console.log(result); 
+
+// Задание выполнено с ошибкой - у вас неверно считывается атрибут lang, в консоль в свойстве lang выводится undefined. Ошибка в том, что lang - не отедельный узел, а атрибут узла. Поэтому у него нет свойства textContent.
+// Кроме того, есть небольшое замечание - не стоит делать заготовки в массиве list объекта result под точное количество студентов, т.к. в реальных условиях вы почти никогда не знаете, сколько объектов вы получите в отчете от сервера. Нужно писать код максимально универсальным и гибким, чтобы он работал верно при различных входных данных. Сейчас, если с сервера придет XML объект с одним узлом student, у вас выведется ещё и пустой объект со значениями undefined
+// Выше исправила
